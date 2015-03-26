@@ -53,6 +53,12 @@ ROOT_URLCONF = 'aba.urls'
 
 WSGI_APPLICATION = 'aba.wsgi.application'
 
+TEMPLATE_DIRS = (
+     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+     # Always use forward slashes, even on Windows.
+     # Don't forget to use absolute paths, not relative paths.
+     os.path.join(os.path.dirname(__file__), 'pags').replace('\\','//'),
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -80,11 +86,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
 PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT =  os.path.join(PROJECT_DIR, 'images')
 MEDIA_URL = '/images/'
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(PROJECT_DIR, 'static')
 
-CORS_ORIGIN_ALLOW_ALL = True
+STATIC_ROOT = ''
