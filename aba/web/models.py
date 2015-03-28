@@ -5,7 +5,7 @@ from django.db import models
 class Anuncio (models.Model):
 	titulo = models.CharField(max_length=256)
 	texto = models.TextField()
-	fechaPublicacion = models.DateField()
+	fechaPublicacion = models.DateTimeField()
 	nick = models.CharField(max_length=50)
 	imagen = models.ImageField(upload_to='files/images/anuncios', null=True)
 
@@ -16,7 +16,7 @@ class Anuncio (models.Model):
 class Noticia (models.Model):
 	titulo = models.CharField(max_length=256)
 	texto = models.TextField()
-	fechaPublicacion = models.DateField()
+	fechaPublicacion = models.DateTimeField()
 	imagen = models.ImageField(upload_to='files/images/noticias', null=True)
 
 	def __str__(self):         
@@ -35,7 +35,7 @@ class Categoria (models.Model):
 
 class Documento (models.Model):
 	nombre = models.CharField(max_length=256)	
-	fechaPublicacion = models.DateField()
+	fechaPublicacion = models.DateTimeField()
 	archivo = models.FileField(upload_to='files/documents', null=False)
 	categoria = models.ForeignKey ('Categoria')
 
