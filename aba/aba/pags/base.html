@@ -12,14 +12,14 @@
     <title>Asociación Balear de Apicultores</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="{{ STATIC_URL }}css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="{{ STATIC_URL }}css/landing-page.css" rel="stylesheet">
+    <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="{{ STATIC_URL }}font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="{{ STATIC_URL }}http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' %}" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -43,7 +43,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand topnav" href="#">ABA</a>
+                <a class="navbar-brand topnav" href="">ABA</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,16 +55,24 @@
                         <a href="#noticias">Noticias</a>
                     </li>
                     <li>
-                        <a href="anuncios?page=1">Anuncio</a>
+                        <a href="/anuncios">Anuncio</a>
                     </li>
                     <li>
                         <a href="#documentos">Documentos</a>
+                    </li>
+                    <li>
+                        {% if logueado %}
+                            <a href="/accounts/logout"><span class="label label-default">Cerrar sesión</span></a>
+                        {% else %}
+                            <a href="/accounts/login"><span class="label label-default">Iniciar sesión</span></a>
+                        {% endif %}
                     </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
+
     </nav>
 
 
@@ -108,6 +116,50 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal para loguearse -->
+    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Introduce tus datos</h4>
+          </div>
+          <div class="modal-body">
+            {{ state }}
+            <form action="/login/" method="post">
+                {% if next %}
+                <input type="hidden" name="next" value="{{ next }}" />
+                {% endif %}
+                <table>
+                    <tr>
+                        <td>
+                            Usuario:
+                        </td>
+                        <td>
+                            <input type="text" name="username" value="{{ username }}" /><br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Contraseña:
+                        </td>
+                        <td>
+                            <input type="password" name="password" value="{{ password }}" /><br />
+                        </td>
+                    </tr>
+                </table>
+                <!--<input type="submit" value="Log In" />-->
+            <!--</form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+            <button type="button" type="submit" class="btn btn-primary">Iniciar sesión</button>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    <!-- Fin Modal para loguearse -->
 
     <!-- jQuery -->
     <script src="{{ STATIC_URL }}js/jquery.js"></script>

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="col-md-6 col-md-offset-3" style="margin-top: 6%;">
+{% if form.errors %}
+<p>Usuario y contraseña erroneos.</p>
+{% endif %}
+
+<div class="jumbotron">
+<div class="container">
+<form method="post" action="{% url 'django.contrib.auth.views.login' %} " style="margin-bottom: 6%;">
+{% csrf_token %}
+<h2 class="form-signin-heading">Introduce tus datos</h2>
+<div class="input-group" style="margin-top: 2%;">
+  <span class="input-group-addon" id="basic-addon1">@</span>
+  <input id="username" name="username" type="text" class="form-control" placeholder="Usuario" aria-describedby="basic-addon1">
+</div>
+<br>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">@</span>
+  <input id="password" name="password" type="password" class="form-control" placeholder="Contraseña" aria-describedby="basic-addon1">
+</div>
+<br>
+<button class="btn btn-large btn-primary" type="submit" style="margin-top: 1%;">Iniciar sesión</button>
+</form>
+</div>
+</div>
+</div>
+{% endblock %}

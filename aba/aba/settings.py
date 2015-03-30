@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.auth.urls',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -47,6 +48,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'pagination.middleware.PaginationMiddleware',
 )
 
 ROOT_URLCONF = 'aba.urls'
@@ -58,7 +60,14 @@ TEMPLATE_DIRS = (
      # Always use forward slashes, even on Windows.
      # Don't forget to use absolute paths, not relative paths.
      os.path.join(os.path.dirname(__file__), 'pags').replace('\\','//'),
+     os.path.join(os.path.dirname(__file__), 'static').replace('\\','//'),
 )
+
+# TEMPLATE_CONTEXT_PROCESSORS = ("django.core.context_processors.auth",
+# "django.core.context_processors.debug",
+# "django.core.context_processors.i18n",
+# "django.core.context_processors.media",
+# "django.core.context_processors.request",)
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
@@ -83,6 +92,8 @@ USE_L10N = True
 
 USE_TZ = True
 
+#APPEND_SLASH=False
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
@@ -90,5 +101,13 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT =  os.path.join(PROJECT_DIR, 'files')
 MEDIA_URL = '/files/'
 STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL = '/auth/logged_in'
 
 STATIC_ROOT = ''
+
+ACCOUNT_ACTIVATION_DAYS = 2
+EMAIL_HOST = 'localhost'
+DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+LOGIN_REDIRECT_URL = '/'
+
+

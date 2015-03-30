@@ -5,6 +5,7 @@ from aba import settings
 # FIN FILES
 
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.views import login, logout
 from django.contrib import admin
 from web.views import home, cargar_anuncios
 
@@ -14,7 +15,9 @@ urlpatterns = patterns('',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^anuncios/(?P<pagina>\w{0,50})/$', cargar_anuncios), 
+    url(r'^anuncios/', cargar_anuncios),
+    url(r'^accounts/login/$', login, {'template_name': 'login.html'}),
+    url(r'^accounts/logout/$', logout, {'template_name': 'login.html'}),
 )
 
 urlpatterns += staticfiles_urlpatterns()
