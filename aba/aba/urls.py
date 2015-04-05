@@ -7,7 +7,7 @@ from aba import settings
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.views import login, logout
 from django.contrib import admin
-from web.views import home, cargar_anuncios
+from web.views import home, cargar_anuncios, contacto, enviarEmail
 
 urlpatterns = patterns('',
     # Examples:
@@ -16,6 +16,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^anuncios/', cargar_anuncios),
+    url(r'^contacto/', contacto),
     url(r'^accounts/login/$', login, {'template_name': 'login.html'}),
     url(r'^accounts/logout/$', logout, {'template_name': 'login.html'}),
 )

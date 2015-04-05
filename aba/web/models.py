@@ -1,4 +1,5 @@
 from django.db import models
+from django_google_maps import fields as map_fields
 
 # Creamos los modelos. La base de datos constara de tres tabals sin relacion.
 
@@ -41,3 +42,11 @@ class Documento (models.Model):
 
 	def __str__(self):         
 		return self.nombre
+
+
+class Contacto (models.Model):
+	email = models.CharField(max_length=256,null=True)	
+	latitud = models.CharField(max_length=50,null=True)	
+	longitud = models.CharField(max_length=50,null=True)	
+	fecha = models.DateField(null=True)
+

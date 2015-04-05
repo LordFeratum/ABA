@@ -38,6 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'web',
+    'django_google_maps',
+    'corsheaders',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -49,7 +51,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'pagination.middleware.PaginationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 )
+
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'aba.urls'
 
@@ -91,6 +96,10 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+#Desloguear al cerrar el navegador y tiempo de expiracion al no interactuar con la web.
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 30 * 60
 
 #APPEND_SLASH=False
 

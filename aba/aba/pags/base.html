@@ -17,6 +17,9 @@
     <!-- Custom CSS -->
     <link href="{% static 'css/landing-page.css' %}" rel="stylesheet">
 
+    <!-- Google Maps -->
+    <link href="{% static 'css/google-maps-admin.css' %}" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="{% static 'css/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic' %}" rel="stylesheet" type="text/css">
@@ -30,10 +33,10 @@
 
 </head>
 
-<body>
+<body style="overflow-x: hidden;">
 
     <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation">
+    <nav class="navbar navbar-default navbar-fixed-top topnav" role="navigation" style="position: absolute;">
         <div class="container topnav">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -44,6 +47,7 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand topnav" href="/">ABA</a>
+
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -61,10 +65,18 @@
                         <a href="#documentos">Documentos</a>
                     </li>
                     <li>
+                        <a href="/contacto">Contacto</a>
+                    </li>
+                    <li>
                         {% if logueado %}
-                            <a href="/accounts/logout"><span class="label label-default">Cerrar sesión</span></a>
+                            <a href="/accounts/logout"><span class="label label-danger">Cerrar sesión</span></a>
                         {% else %}
-                            <a href="/accounts/login"><span class="label label-default">Iniciar sesión</span></a>
+                            <a href="/accounts/login"><span class="label label-success">Iniciar sesión</span></a>
+                        {% endif %}
+                    </li>
+                    <li>
+                        {% if logueado %}
+                            <p class="navbar-brand topnav" style="color: #38a591;">@{{ usuario }}</p>
                         {% endif %}
                     </li>
                 </ul>
@@ -72,16 +84,17 @@
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
-
     </nav>
 
 
 
 
     <!-- Page Content -->
-    <div class="row">
-    {% block content %} {% endblock %}
-    </div>
+    <section>
+        <div class="row" style="position: relative;">
+        {% block content %} {% endblock %}
+        </div>
+    </section>
 	
     <!-- /.content-section-a -->
 
@@ -162,10 +175,21 @@
     <!-- Fin Modal para loguearse -->
 
     <!-- jQuery -->
-    <script src="{{ STATIC_URL }}js/jquery.js"></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript">
+        window.myobj = {
+            markerOver: function() { this.openInfoWindow(); },
+            markerOut: function() { this.closeInfoWindow(); }
+        };
+    </script>
+    <!-- Google Maps -->
+    <script href="{% static 'js/google-maps-admin.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize"></script>
 
 </body>
 

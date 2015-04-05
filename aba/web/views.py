@@ -7,35 +7,43 @@ from django.shortcuts import render_to_response, RequestContext
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
+from django.core.mail import send_mail
+#from django.template.context_processors import csrf
 from models import *
 
 def home (request):
-    if request.user.is_authenticated():
-	   return render_to_response('index.html', {'logueado' : True})
-    else:
-        return render_to_response('index.html', {'logueado' : False})
+	return render_to_response('index.html', {'logueado' : request.user.is_authenticated(), 'usuario': request.user.username})
 
 
-# Create your views here.
+#Vista que devuelve una lista de anuncios ordenados por fecha.
 def cargar_anuncios (request):
-	anuncios_lista = Anuncio.objects.order_by("fechaPublicacion").reverse()
-	# paginacion = Paginator(anuncios_lista, 10) #Habra 10 anuncios por pagina.
+    anuncios_lista = Anuncio.objects.order_by("fechaPublicacion").reverse()
+    return render_to_response('anuncios.html', {'anuncios' : anuncios_lista, 'logueado' : request.user.is_authenticated(), 
+        'usuario': request.user.username})
 
-	# pagina = request.GET.get('page', 1) #Recojemos la pagina de la URL (la pasamos por GET)
- #    #anuncios = paginacion.page(page)
- #    try:
- #         anuncios = paginacion.page(pagina)
- #    except PageNotAnInteger:
- #         # Si la pagina no es un numero (en la URL) devolvemos la primera pagina
- #         anuncios = paginacion.page(1)
- #    except EmptyPage:
- #         # Si la pagina de la URL es un numero fuera del rango permitdo, mostraremos la utlima pagina
- #         anuncios = paginacion.page(paginacion.num_pages)
-
-	return render_to_response('anuncios.html', {'anuncios' : anuncios_lista})
 
 
 @login_required
 def publicar_anuncio (request):
     return HttpResponse("Anuncio publicado")
 
+
+def contacto (request):
+    contacto = Contacto.objects.all()[0];
+    if request.method == 'POST':
+        nombre = request.POST.get('name')
+        email = request.POST.get('email')
+        mensaje = request.POST.get('message')
+        send_mail('ABA Contacto', mensaje, email, [contacto.email], fail_silently=False)
+        
+    return render_to_response('contacto.html', {'latitud' : contacto.latitud, 'longitud' : contacto.longitud, 'logueado' : request.user.is_authenticated(), 
+        'usuario': request.user.username})
+
+
+def enviarEmail (request):
+    nombre = request.POST.get('name')
+    email = request.POST.get('email')
+    mensaje = request.POST.get('message')
+    contacto = Contacto.objects.all()[0];
+    send_mail('ABA Contacto', mensaje, email, [contacto.email], fail_silently=False)
+    return render_to_response('contacto.html')
