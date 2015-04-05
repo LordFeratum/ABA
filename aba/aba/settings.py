@@ -45,7 +45,7 @@ INSTALLED_APPS = (
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -110,13 +110,13 @@ PROJECT_DIR = os.path.abspath(os.path.dirname(__file__))
 MEDIA_ROOT =  os.path.join(PROJECT_DIR, 'files')
 MEDIA_URL = '/files/'
 STATIC_URL = '/static/'
-LOGIN_REDIRECT_URL = '/auth/logged_in'
+#LOGIN_REDIRECT_URL = '/auth/logged_in'
 
 STATIC_ROOT = ''
 
 ACCOUNT_ACTIVATION_DAYS = 2
 EMAIL_HOST = 'localhost'
-DEFAULT_FROM_EMAIL = 'webmaster@localhost'
+DEFAULT_FROM_EMAIL = 'lord.feratum@gmail.com'
 LOGIN_REDIRECT_URL = '/'
 
 
