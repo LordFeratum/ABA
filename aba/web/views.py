@@ -31,20 +31,15 @@ def cargar_anuncios (request):
 
     if (logueado):
         if request.method == 'POST':
-            form = AnuncioForm(request.POST, request.FILES)
-            # form.fields['nick'].initial = request.user.username
-            # form.fields['fechaPublicacion'].initial = datetime.now()
-            tit = request.POST.get('titulo', '')
-            tex = request.POST.get('texto', '')
-            image = request.POST.get('imagen', '')
-            if form.is_valid():
-                anuncio = Anuncio(titulo=tit, texto=tex, fechaPublicacion=datetime.now(), nick=request.user.username, imagen=image)
-                anuncio.save()
-                return HttpResponse("Bien")
-        else:
-            form = AnuncioForm("")
+            form = AnuncioForm(request.user.username, request.POST, request.FILES)
 
-    anuncios = Anuncio.objects.order_by("fechaPublicacion").reverse()
+            if form.is_valid():
+                form.save()
+                
+        else:
+            form = AnuncioForm(request.user.username)
+
+    anuncios_noticias = Anuncio.objects.order_by("fechaPublicacion").reverse()
     usuario = request.user.username
     return render_to_response('anuncios_noticias.html', locals(), context_instance=RequestContext(request))
 

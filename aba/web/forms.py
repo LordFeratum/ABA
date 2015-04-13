@@ -1,6 +1,7 @@
 from django import forms
 from django.forms import ModelForm
 from web.models import Anuncio
+from datetime import datetime
 
 class ContactoForm (forms.Form):
 	nombre = forms.CharField(max_length=254,
@@ -13,11 +14,27 @@ class ContactoForm (forms.Form):
 
 
 class AnuncioForm(ModelForm):
+	
+	def __init__(self, user, *args, **kwargs):
+		super(AnuncioForm, self).__init__(*args, **kwargs)
+		self.user = user
+
+
 	class Meta:
 		model = Anuncio
+		fields = ('titulo', 'texto', 'imagen')
 		widgets = {
             'titulo': forms.TextInput(attrs={'class': "form-control", 'placeholder': "Titulo anuncio", 'id': "titulo", 'name': "titulo"}),
         	'texto': forms.Textarea(attrs={'class': "form-control", 'placeholder': "Escribe aqui el texto del anuncio...", 'id': "texto", 
 			'name': "texto", 'rows': "5"}),
         }
-        exclude = ['nick', 'fechaPublicacion']
+
+
+	def save(self, force_insert=False, force_update=False, commit=True):
+		m = super(AnuncioForm, self).save(commit=False)
+		m.nick = self.user
+		m.fechaPublicacion = datetime.now()
+		if commit:
+			m.save()
+			return m
+		
