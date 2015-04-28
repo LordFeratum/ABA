@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+
+
 <div class="col-sm-6 col-sm-offset-3" style="margin-top: 10ex; position:inherit;">
-	{% if logueado %}
-	<button type="button" class="btn btn-default" aria-label="Left Align" style ="margin-bottom: 3ex;" data-toggle="modal" data-target="#myModal">
-	    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
-	</button>
-	{% endif %}
-	{% for anuncio_noticia in anuncios_noticias %}
+
+    <div class="col-6">
+        {% if logueado %}
+        <button type="button" class="btn btn-default" aria-label="Left Align" style ="margin-bottom: 3ex;" data-toggle="modal" data-target="#myModal">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+        </button>
+	    {% endif %}
+    </div>
+
+	{% for anuncio_noticia in ads %}
 	<div class="jumbotron">
   		<div class="container">
 			<div class="media">
@@ -24,7 +31,25 @@
   		</div>
 	</div>
 	{% endfor %}
+
+    <div class="pagination">
+        <span class="step-links">
+            {% if ads.has_previous %}
+                <a href="?page={{ ads.previous_page_number }}"><<  </a>
+            {% endif %}
+
+            <span class="current">
+                Página {{ ads.number }} de {{ ads.paginator.num_pages }}
+            </span>
+
+            {% if ads.has_next %}
+                <a href="?page={{ ads.next_page_number }}">  >></a>
+            {% endif %}
+        </span>
+    </div>
+
 </div>
+
 
 {% if logueado %}
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
