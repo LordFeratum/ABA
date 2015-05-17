@@ -18,7 +18,7 @@ class Noticia (models.Model):
 	titulo = models.CharField(max_length=256)
 	texto = models.TextField()
 	fechaPublicacion = models.DateTimeField()
-	imagen = models.ImageField(upload_to='files/images/noticias', null=True)
+	imagen = models.ImageField(upload_to='files/images/noticias', null=True) 
 
 	def __str__(self):         
 		return self.titulo

@@ -13,7 +13,6 @@ from web.models import Anuncio, Noticia
 from web.forms import ContactoForm, AnuncioForm
 from django.views.decorators.csrf import csrf_protect
 from datetime import datetime
-from django.core.paginator import Paginator, EmptyPage
 
 
 from models import *
@@ -24,41 +23,10 @@ def home(request):
     usuario = request.user.username
     return render_to_response('index.html', locals())
 
-@csrf_protect
-def cargar_noticias(request):
-    logueado = request.user.is_authenticated()
-
-    if(logueado):
-        if request.method == 'POST':
-            form = AnuncioForm(request.user.username, request.POST, request.FILES)
-
-            if form.is_valid():
-                form.save()
-
-        else:
-            form = AnuncioForm(request.user.username)
-
-    anuncios_noticias = Noticia.objects.order_by("fechaPublicacion").reverse()
-
-    #PAGINACION
-    paginator = Paginator(anuncios_noticias, 10)
-    page = request.GET.get('page')
-
-    try:
-        ads = paginator.page(page)
-
-    except EmptyPage:
-        ads = paginator.page(paginator.num_pages)
-
-    #FIN PAGINACION
-
-    usuario = request.user.username
-    return render_to_response('anuncios_noticias.html', locals(), context_instance=RequestContext(request))
-
 
 #Vista que devuelve una lista de anuncios ordenados por fecha.
 @csrf_protect
-def cargar_anuncios(request):
+def cargar_anuncios (request):
     logueado = request.user.is_authenticated()
 
     if (logueado):
@@ -72,25 +40,13 @@ def cargar_anuncios(request):
             form = AnuncioForm(request.user.username)
 
     anuncios_noticias = Anuncio.objects.order_by("fechaPublicacion").reverse()
-
-    #PAGINACION
-    paginator = Paginator(anuncios_noticias, 10)
-    page = request.GET.get('page')
-
-    try:
-        ads = paginator.page(page)
-
-    except EmptyPage:
-        ads = paginator.page(paginator.num_pages)
-
-    #FIN PAGINACION
-
     usuario = request.user.username
     return render_to_response('anuncios_noticias.html', locals(), context_instance=RequestContext(request))
 
 
+
 @login_required
-def publicar_anuncio(request):
+def publicar_anuncio (request):
     return HttpResponse("Anuncio publicado")
 
 
